@@ -1,6 +1,7 @@
 config RTL8192CU
-	tristate "Realtek 8192C USB WiFi"
+	boolean "Realtek 8192C USB WiFi"
 	depends on USB
+	select GENERIC_KERNEL_THREAD
 	---help---
 	  Help message of RTL8192CU
 
