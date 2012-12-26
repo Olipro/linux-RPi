@@ -1287,8 +1287,7 @@ void pcd_remove(dwc_bus_dev_t *_dev)
 #if LINUX_VERSION_CODE < KERNEL_VERSION(2,6,37)
 int usb_gadget_register_driver(struct usb_gadget_driver *driver)
 #else
-int usb_gadget_probe_driver(struct usb_gadget_driver *driver,
-		int (*bind)(struct usb_gadget *))
+int usb_gadget_probe_driver(struct usb_gadget_driver *driver)
 #endif
 {
 	int retval;
@@ -1297,7 +1296,7 @@ int usb_gadget_probe_driver(struct usb_gadget_driver *driver,
 		    driver->driver.name);
 
 	if (!driver || driver->max_speed == USB_SPEED_UNKNOWN ||
-#if LINUX_VERSION_CODE < KERNEL_VERSION(2,6,37)
+#if LINUX_VERSION_CODE < KERNEL_VERSION(2,6,37) || LINUX_VERSION_CODE >= KERNEL_VERSION(3,7,0)
 	    !driver->bind ||
 #else
 		!bind ||
@@ -1322,8 +1321,10 @@ int usb_gadget_probe_driver(struct usb_gadget_driver *driver,
 	DWC_DEBUGPL(DBG_PCD, "bind to driver %s\n", driver->driver.name);
 #if LINUX_VERSION_CODE < KERNEL_VERSION(2,6,37)
 	retval = driver->bind(&gadget_wrapper->gadget);
-#else
+#elif LINUX_VERSION_CODE < KERNEL_VERSION(3,7,0)
 	retval = bind(&gadget_wrapper->gadget);
+#else
+	retval = driver->bind(&gadget_wrapper->gadget, driver);
 #endif
 	if (retval) {
 		DWC_ERROR("bind to driver %s --> error %d\n",
