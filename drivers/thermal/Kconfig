@@ -40,6 +40,13 @@ config SPEAR_THERMAL
 	  Enable this to plug the SPEAr thermal sensor driver into the Linux
 	  thermal framework
 
+config THERMAL_BCM2835
+	tristate "BCM2835 Thermal Driver"
+	depends on THERMAL
+	help
+	  This will enable temperature monitoring for the Broadcom BCM2835
+	  chip. If built as a module, it will be called 'bcm2835-thermal'.
+
 config RCAR_THERMAL
 	tristate "Renesas R-Car thermal driver"
 	depends on THERMAL
@@ -55,10 +62,3 @@ config EXYNOS_THERMAL
 	help
 	  If you say yes here you get support for TMU (Thermal Managment
 	  Unit) on SAMSUNG EXYNOS series of SoC.
-
-config THERMAL_BCM2835
-	tristate "BCM2835 Thermal Driver"
-	depends on THERMAL
-	help
-	  This will enable temperature monitoring for the Broadcom BCM2835
-	  chip. If built as a module, it will be called 'bcm2835-thermal'.

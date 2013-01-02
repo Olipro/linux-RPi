@@ -46,7 +46,7 @@
 #define SMSC95XX_INTERNAL_PHY_ID	(1)
 #define SMSC95XX_TX_OVERHEAD		(8)
 #define SMSC95XX_TX_OVERHEAD_CSUM	(12)
-#define MAC_ADDR_LEN                (6)
+#define MAC_ADDR_LEN                    (6)
 #define SUPPORTED_WAKE			(WAKE_MAGIC)
 
 #define check_warn(ret, fmt, args...) \
